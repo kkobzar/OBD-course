@@ -1,0 +1,16 @@
+#message-container{
+    background-color: #c5c5c5;
+    border-radius: 20px;
+    min-height: 50vh;
+}
+.message-item{
+    background-color: #e0e0e0;
+    margin: 10px 0;
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+.message-author, .message-ts{
+    display: inline-block;
+    font-size: .8rem;
+    color: #2f2f2f;
+}

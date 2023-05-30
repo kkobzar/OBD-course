@@ -2,9 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Room</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<section class="container">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div id="message-container" class="w-100 py-4 px-2 mt-4">
+            <div class="message-item">
+                <div class="message-author">Tester</div>
+                <div class="message-ts">19:30</div>
+                <div class="message-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis commodi dolorum eveniet harum laboriosam, magni natus pariatur perspiciatis praesentium provident quaerat qui quisquam veniam. Doloribus eaque laudantium magnam nemo vitae.
+                </div>
+            </div>
 
+        </div>
+        <form id="chat-form" class="form-floating my-4">
+            <textarea class="form-control" placeholder="Enter your message" id="messageBox" style="height: 100px"></textarea>
+            <label for="messageBox">Message</label>
+            <button type="submit" class="btn btn-primary mt-2">Send</button>
+        </form>
+    </div>
+</section>
+
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
+        integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4="
+        crossorigin="anonymous"
+></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
