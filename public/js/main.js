@@ -1,6 +1,10 @@
 const socket = io()
 const messageForm = document.getElementById('chat-form')
+const messageContainer = document.getElementById('message-container')
 
+const {username, room} = Qs.parse(location.search,{ignoreQueryPrefix: true})
+
+socket.emit('joinRoom', {username, room})
 socket.on('message', message => {
     console.log(message)
     renderMessage(message)
@@ -15,6 +19,8 @@ messageForm.addEventListener('submit', e => {
     console.log(msg)
     socket.emit('chatMessage', msg)
 
+    e.target.elements.messageBox.value = ''
+
 })
 
 function renderMessage(m){
@@ -27,5 +33,5 @@ function renderMessage(m){
                 ${m}
                 </div>
             </div>`
-    document.getElementById('message-container').appendChild(div)
+    messageContainer.appendChild(div)
 }

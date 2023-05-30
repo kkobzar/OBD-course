@@ -27,3 +27,6 @@ CREATE TABLE messages(
     FOREIGN KEY (userId) REFERENCES users(id),
     FOREIGN KEY (roomId) REFERENCES chat_rooms(id)
 );
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+flush privileges;
