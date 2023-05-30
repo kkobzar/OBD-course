@@ -5,6 +5,7 @@ const socketio = require('socket.io')
 
 const db = require('./utils/db')
 const userHelper = require('./utils/users')
+const messageHelper = require('./utils/messages')
 
 const app = express()
 const server = http.createServer(app)
@@ -12,10 +13,15 @@ const io = socketio(server)
 
 // socket connection logic
 io.on('connection', socket => {
-    socket.on('joinRoom', ({username, room}) => {
-        socket.broadcast.emit('message', `${username} joined a chat!`)
+    let userId = null
 
-        userHelper.createUser(username, room)
+    socket.on('joinRoom', async ({username, room}) => {
+        socket.broadcast.emit('message', `Hello, ${username}`)
+
+        userId = await userHelper.createUser(username, room)
+        console.log('user created')
+        //userId = await userHelper.getUserId(username,room)
+        console.log('user - ',userId)
     })
     console.log('New connection')
     socket.emit('message', 'Welcome!')
@@ -26,8 +32,13 @@ io.on('connection', socket => {
     })
 
     //receive chat message
-    socket.on('chatMessage', msg => {
+    socket.on('chatMessage',async msg => {
         console.log(msg)
+        if(userId){
+            console.log('Saved message to db')
+
+            messageHelper.saveMessage(msg,userId)
+        }
         io.emit('message', msg)
     })
 
