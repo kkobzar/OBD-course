@@ -8,8 +8,21 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
+// socket connection logic
+io.on('connection', socket => {
+    console.log('New connection')
+    socket.emit('message', 'Welcome!')
+
+    socket.broadcast.emit('message', 'A user joined a chat!')
+
+    socket.on('disconnect', ()=>{
+        socket.emit('message', 'A user left a chat!')
+    })
+
+})
+
 const PORT = 3000 || process.env.PORT
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
 
