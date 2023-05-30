@@ -19,6 +19,12 @@ io.on('connection', socket => {
         socket.emit('message', 'A user left a chat!')
     })
 
+    //receive chat message
+    socket.on('chatMessage', msg => {
+        console.log(msg)
+        io.emit('message', msg)
+    })
+
 })
 
 const PORT = 3000 || process.env.PORT
