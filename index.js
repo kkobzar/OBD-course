@@ -6,6 +6,7 @@ const socketio = require('socket.io')
 const db = require('./utils/db')
 const userHelper = require('./utils/users')
 const messageHelper = require('./utils/messages')
+const moment = require("moment");
 
 const app = express()
 const server = http.createServer(app)
@@ -19,12 +20,12 @@ io.on('connection', socket => {
         socket.broadcast.emit('message', `Hello, ${username}`)
 
         userId = await userHelper.createUser(username, room)
-        console.log('user created')
-        //userId = await userHelper.getUserId(username,room)
-        console.log('user - ',userId)
+
+
     })
     console.log('New connection')
-    socket.emit('message', 'Welcome!')
+    const d = moment()
+    socket.emit('message', {msg:'Welcome!',username:'Chat Bot', date:d.format('HH:mm')})
 
 
     socket.on('disconnect', ()=>{
@@ -34,12 +35,17 @@ io.on('connection', socket => {
     //receive chat message
     socket.on('chatMessage',async msg => {
         console.log(msg)
+        const d = moment()
+        let username = ''
         if(userId){
             console.log('Saved message to db')
 
             messageHelper.saveMessage(msg,userId)
+            username = await userHelper.getUserName(userId)
+            console.log(username.userName)
         }
-        io.emit('message', msg)
+        // console.log(`${d.getHours()}:${d.getMinutes()}`)
+        io.emit('message', {msg, username:username.userName, date: d.format('HH:mm')})
     })
 
 })

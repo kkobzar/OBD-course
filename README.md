@@ -4,4 +4,5 @@ TODO:
 1. Load room messages on joinChat event
 2. Creating custom rooms
 3. Prevent name collision
-4. Burn this shitty project down
+4. Prevent SQLi
+5. Burn this shitty project down

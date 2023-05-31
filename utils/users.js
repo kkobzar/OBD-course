@@ -47,7 +47,22 @@ function getUserId(name, id) {
 
 }
 
+function getUserName(id){
+    return new Promise((res, rej)=>{
+        db.query(`SELECT userName FROM users WHERE id=${id}`,(e,r)=>{
+            if(e){
+                console.log(e)
+                rej(e)
+            }
+            if(r.length)
+                res(r[0])
+            rej('noRes')
+        })
+    })
+}
+
 module.exports = {
     createUser,
-    getUserId
+    getUserId,
+    getUserName
 }

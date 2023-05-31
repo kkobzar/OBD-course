@@ -27,10 +27,10 @@ function renderMessage(m){
     const div = document.createElement('div')
     div.classList.add('message-item')
     div.innerHTML = `<div class="message-item">
-                <div class="message-author">Tester</div>
-                <div class="message-ts">19:30</div>
+                <div class="message-author">${m.username}</div>
+                <div class="message-ts">${m.date}</div>
                 <div class="message-text">
-                ${m}
+                ${m.msg}
                 </div>
             </div>`
     messageContainer.appendChild(div)
