@@ -15,22 +15,23 @@ const io = socketio(server)
 // socket connection logic
 io.on('connection', socket => {
     let userId = null
+    const d = moment()
 
     socket.on('joinRoom', async ({username, room}) => {
-        socket.broadcast.emit('message', `Hello, ${username}`)
+        socket.emit('message',{msg:`Hello, ${username}`, username:username, date:d.format('HH:mm')} )
 
         userId = await userHelper.createUser(username, room)
 
 
     })
     console.log('New connection')
-    const d = moment()
-    socket.emit('message', {msg:'Welcome!',username:'Chat Bot', date:d.format('HH:mm')})
+
+    //socket.emit('message', {msg:'Welcome, !',username:'Chat Bot', date:d.format('HH:mm')})
 
 
-    socket.on('disconnect', ()=>{
-        socket.emit('message', 'A user left a chat!')
-    })
+    // socket.on('disconnect', ()=>{
+    //     socket.emit('message', 'A user left a chat!')
+    // })
 
     //receive chat message
     socket.on('chatMessage',async msg => {
